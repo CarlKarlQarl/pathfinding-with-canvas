@@ -53,3 +53,9 @@ table {
 *{
   box-sizing: border-box;
 }
+
+#canvas{
+	background-color: lightcyan;
+	width: 500px;
+    height: 500px;
+}
