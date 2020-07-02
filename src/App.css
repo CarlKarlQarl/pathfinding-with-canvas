@@ -50,12 +50,39 @@ table {
 /* ----------------------------------- */
 /* Add actual styling after this point */
 /* ----------------------------------- */
-*{
+* {
   box-sizing: border-box;
 }
 
-#canvas{
+#canvas {
 	background-color: lightcyan;
-	width: 500px;
-    height: 500px;
+	/* width: 500px;
+    height: 500px; */
+}
+
+button {
+	height: 3em;
+	width: 6em;
+	margin: 1em;
+	font-weight: bold;
+	font-size: 0.5em;
+	text-transform: uppercase;
+	cursor: pointer;
+	color: white;
+	border: 1px solid white;
+	background-color: black;
+}
+
+button:hover {
+	color: black;
+	background-color: #00baff;
+}
+
+button:focus {
+	border: 1px solid #00baff;
+}
+
+button:active {
+	background-color: #1f1f1f;
+	color: white;
 }
