@@ -17,13 +17,17 @@ function draw(ctx, location) {
 
 function Canvas() {
     const canvasRef = useRef(null)
-    const [ locations, setLocations ] = useState([])
+    const [ locations, setLocations ] = useState(JSON.parse(localStorage.getItem("draw-app")) || [])
 
     useEffect(() => {
         const canvas = canvasRef.current
         const ctx = canvas.getContext("2d")
         ctx.clearRect(0, 0, window.innerHeight, window.innerWidth)
         locations.forEach(location => draw(ctx, location))
+    })
+
+    useEffect(() => {
+        localStorage.setItem("draw-app", JSON.stringify(locations))
     })
 
     function handleCanvasClick(event){
