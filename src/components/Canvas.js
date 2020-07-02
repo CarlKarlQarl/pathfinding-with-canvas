@@ -15,33 +15,33 @@ function draw(ctx, location) {
   ctx.restore()
 }
 
-function Canvas() {
-    const canvasRef = useRef(null)
-    const [ locations, setLocations ] = useState(JSON.parse(localStorage.getItem("draw-app")) || [])
+function usePersistentState(init){
+    const [ value, setValue ] = useState(JSON.parse(localStorage.getItem("draw-app")) || init)
+    useEffect(() => localStorage.setItem("draw-app", JSON.stringify(value)))
+    return [value, setValue]
+}
 
+function usePersistentCanvas(){
+    const canvasRef = useRef(null)
+    const [ locations, setLocations ] = usePersistentState([])
     useEffect(() => {
         const canvas = canvasRef.current
         const ctx = canvas.getContext("2d")
         ctx.clearRect(0, 0, window.innerHeight, window.innerWidth)
         locations.forEach(location => draw(ctx, location))
     })
+    return [locations, setLocations, canvasRef]
+}
 
-    useEffect(() => {
-        localStorage.setItem("draw-app", JSON.stringify(locations))
-    })
+function Canvas() {
+    const [ locations, setLocations, canvasRef ] = usePersistentCanvas()
 
     function handleCanvasClick(event){
         const newLocation = { x: event.clientX, y: event.clientY }
         setLocations([...locations, newLocation])
     }
-
-    function handleClear(){
-        setLocations([])
-    }
-
-    function handleUndo(){
-        setLocations(locations.slice(0, -1))
-    }
+    function handleClear(){setLocations([])}
+    function handleUndo(){setLocations(locations.slice(0, -1))}
 
     return(
         <>
@@ -56,8 +56,7 @@ function Canvas() {
                 height={window.innerHeight}
                 onClick={handleCanvasClick}
             />
-        </>
-        
+        </> 
     )
 }
 
