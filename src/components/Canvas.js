@@ -2,9 +2,11 @@ import React, { useRef, useState, useEffect } from "react"
 
 function drawCircle(ctx, location) {
     const { x, y } = location
+    ctx.fillStyle = "#000000"
     ctx.beginPath()
-    ctx.arc(x, y-38, 5, 0, 2 * Math.PI)
+    ctx.arc(x, y - 42, 1.5, 0, 2 * Math.PI)
     ctx.stroke()
+    ctx.fill()
 }
 
 function drawLine(ctx, locations) {
@@ -12,8 +14,8 @@ function drawLine(ctx, locations) {
     if (locationLength > 1){
         for (let index = 1; index < locationLength; index++){
             ctx.beginPath();
-            ctx.moveTo(locations[index - 1].x, locations[index - 1].y);
-            ctx.lineTo(locations[index].x, locations[index].y);
+            ctx.moveTo(locations[index - 1].x, locations[index - 1].y - 42);
+            ctx.lineTo(locations[index].x, locations[index].y - 42);
             ctx.stroke();
         }
     }
