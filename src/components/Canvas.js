@@ -3,8 +3,20 @@ import React, { useRef, useState, useEffect } from "react"
 function drawCircle(ctx, location) {
     const { x, y } = location
     ctx.beginPath()
-    ctx.arc(x, y-38, 50, 0, 2 * Math.PI)
+    ctx.arc(x, y-38, 5, 0, 2 * Math.PI)
     ctx.stroke()
+}
+
+function drawLine(ctx, locations) {
+    const locationLength = Object.keys(locations).length
+    if (locationLength > 1){
+        for (let index = 1; index < locationLength; index++){
+            ctx.beginPath();
+            ctx.moveTo(locations[index - 1].x, locations[index - 1].y);
+            ctx.lineTo(locations[index].x, locations[index].y);
+            ctx.stroke();
+        }
+    }
 }
 
 function usePersistentState(init){
@@ -21,6 +33,7 @@ function usePersistentCanvas(){
         const ctx = canvas.getContext("2d")
         ctx.clearRect(0, 0, window.innerHeight, window.innerWidth)
         locations.forEach(location => drawCircle(ctx, location))
+        drawLine(ctx, locations)
     })
     return [locations, setLocations, canvasRef]
 }
